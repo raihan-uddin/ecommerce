@@ -3,27 +3,28 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class ContactForm(forms.Form):
     fullname = forms.CharField(widget=forms.TextInput(
         attrs={
             "class": "form-control",
             "placeholder": "Your Full name"
-            }
-        )
+        }
+    )
     )
     email = forms.EmailField(widget=forms.EmailInput(
         attrs={
-                "class": "form-control",
-                "placeholder": "Your email"
-            }
-        )
+            "class": "form-control",
+            "placeholder": "Your email"
+        }
+    )
     )
     content = forms.CharField(widget=forms.Textarea(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Your Message"
-            }
-        )
+        attrs={
+            "class": "form-control",
+            "placeholder": "Your Message"
+        }
+    )
     )
 
     def clean_email(self):
@@ -37,13 +38,14 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+
 class RegisterForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(
-            attrs = {
-                "class": "form-control",
-                "placeholder": "Username"
-            }
-        )
+        attrs={
+            "class": "form-control",
+            "placeholder": "Username"
+        }
+    )
     )
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -61,7 +63,7 @@ class RegisterForm(forms.Form):
         qs = User.objects.filter(email=email)
         if qs.exists():
             raise forms.ValidationError("Email is taken")
-        return username
+        return email
 
     def clean(self):
         data = self.cleaned_data
@@ -70,4 +72,3 @@ class RegisterForm(forms.Form):
         if password2 != password:
             raise forms.ValidationError("Password must match.")
         return data
-
